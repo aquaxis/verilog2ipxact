@@ -29,18 +29,22 @@ my $VenderName = 'aquaxis';
 my $LibraryName = 'ip';
 my $IpName = 'aq_axi4ls';
 my $Version = '1.0';
+my @Model = ($VenderName, $LibraryName, $IpName, $Version);
 
 # Main
 my $NetList = new Verilog::Netlist;
 ReadVerilogFiles($NetList, \@FileList);
 
-PrintModuleHead($NetList, $IntegModule);
-PrintPortsDefine($NetList);
-PrintInstance($NetList);
+PrintIPXACT($NetList, \@Model);
+
+#PrintModuleHead($NetList, $IntegModule);
+#PrintPortsDefine($NetList);
+#PrintInstance($NetList);
 
 exit(0);
 
-# Sub routines
+############################################################
+# Read Verilog File
 sub ReadVerilogFiles {
     my ($netlist, $r_filelist) = @_;
 
@@ -49,6 +53,14 @@ sub ReadVerilogFiles {
     }
 
     $netlist->link(); # connection resolve
+}
+
+############################################################
+# Output IP-XACT
+sub PrintIPXACT {
+    my ($netlist, $model) = @_;
+
+    print @{$model}[0]."\n";
 }
 
 #
